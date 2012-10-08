@@ -48,7 +48,7 @@ namespace DiffViews
 
     public:
         virtual Type type() const = 0;
-        virtual void exportRaw( QTextStream& stream );
+        virtual void exportRaw( QTextStream& stream ) = 0;
         virtual QExplicitlySharedDataPointer< TextFilePatch > asTextFilePatch();
         virtual QExplicitlySharedDataPointer< BinaryFilePatch > asBinaryFilePatch();
     };

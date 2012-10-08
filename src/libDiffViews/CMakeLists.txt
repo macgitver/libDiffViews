@@ -9,6 +9,7 @@ SET( SRC_FILES
     Model/HunkPart.cpp
     Model/DiffLines.cpp
     Model/TextFilePatch.cpp
+    Model/BinaryFilePatch.cpp
     Model/FilePatch.cpp
     Model/Patch.cpp
 )
@@ -20,6 +21,7 @@ SET( PUB_HDR_FILES
     Model/HunkPart.hpp
     Model/DiffLines.hpp
     Model/FilePatch.hpp
+    Model/BinaryFilePatch.hpp
     Model/TextFilePatch.hpp
     Model/Patch.hpp
 )
@@ -41,7 +43,7 @@ QT_MOC( MOC_FILES ${HDR_FILES} )
 HIC( HIC_FILES ${HID_FILES} )
 
 ADD_QT_LIBRARY(
-    diffViews SHARED
+    DiffViews SHARED
 
     ${SRC_FILES}
     ${HDR_FILES}

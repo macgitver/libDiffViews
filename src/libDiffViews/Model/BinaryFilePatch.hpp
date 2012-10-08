@@ -14,30 +14,22 @@
  *
  */
 
-#include "libDiffViews/Model/TextFilePatch.hpp"
-#include "libDiffViews/Model/BinaryFilePatch.hpp"
+#ifndef DIFFVIEWS_MODEL_BINARY_FILE_PATCH_HPP
+#define DIFFVIEWS_MODEL_BINARY_FILE_PATCH_HPP
+
+#include "libDiffViews/Model/Hunk.hpp"
+#include "libDiffViews/Model/FilePatch.hpp"
 
 namespace DiffViews
 {
 
-    FilePatch::FilePatch()
+    class DIFF_VIEWS_API BinaryFilePatch : public FilePatch
     {
-    }
-
-    FilePatch::~FilePatch()
-    {
-    }
-
-    TextFilePatch::Ptr FilePatch::asTextFilePatch()
-    {
-        return TextFilePatch::Ptr( NULL );
-    }
-
-    BinaryFilePatch::Ptr FilePatch::asBinaryFilePatch()
-    {
-        return BinaryFilePatch::Ptr( NULL );
-    }
+    public:
+        typedef QExplicitlySharedDataPointer< BinaryFilePatch > Ptr;
+        typedef QList< Ptr > List;
+    };
 
 }
 
-
+#endif
