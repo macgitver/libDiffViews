@@ -19,7 +19,7 @@
 
 #include <qglobal.h>
 
-#ifdef libDiffViews_EXPORTS
+#ifdef DiffViews_EXPORTS
 #   define DIFF_VIEWS_API Q_DECL_EXPORT
 #else
 #   define DIFF_VIEWS_API Q_DECL_IMPORT

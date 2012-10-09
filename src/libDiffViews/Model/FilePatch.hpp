@@ -22,13 +22,15 @@
 
 class QTextStream;
 
+#include "libDiffViews/DiffViewsApi.hpp"
+
 namespace DiffViews
 {
 
     class TextFilePatch;
     class BinaryFilePatch;
 
-    class FilePatch : public QSharedData
+    class DIFF_VIEWS_API FilePatch : public QSharedData
     {
     public:
         typedef QExplicitlySharedDataPointer< FilePatch > Ptr;
