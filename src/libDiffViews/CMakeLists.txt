@@ -3,6 +3,12 @@ PROJECT( libDiffViews )
 
 QT_PREPARE( Core Gui Widgets )
 
+INCLUDE_DIRECTORIES(
+    ${DIFFVIEWS_SOURCE_DIR}
+    ${libDiffViews_SOURCE_DIR}
+    ${libDiffViews_BINARY_DIR}
+)
+
 SET( SRC_FILES
 
     Model/Hunk.cpp
@@ -12,11 +18,15 @@ SET( SRC_FILES
     Model/BinaryFilePatch.cpp
     Model/FilePatch.cpp
     Model/Patch.cpp
+
+    RawView/RawView.cpp
+    RawView/RawHighlighter.cpp
 )
 
 SET( PUB_HDR_FILES
 
     DiffViewsApi.hpp
+
     Model/Hunk.hpp
     Model/HunkPart.hpp
     Model/DiffLines.hpp
@@ -24,9 +34,13 @@ SET( PUB_HDR_FILES
     Model/BinaryFilePatch.hpp
     Model/TextFilePatch.hpp
     Model/Patch.hpp
+
+    RawView/RawView.hpp
 )
 
 SET( PRIV_HDR_FILES
+
+    RawView/RawHighlighter.hpp
 )
 
 
