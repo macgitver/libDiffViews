@@ -16,7 +16,7 @@
 
 #include <QTextEdit>
 
-#include "RawView/RawHighlighter.hpp"
+#include "Views/Raw/RawHighlighter.hpp"
 
 namespace DiffViews
 {

@@ -19,8 +19,8 @@ SET( SRC_FILES
     Model/FilePatch.cpp
     Model/Patch.cpp
 
-    RawView/RawView.cpp
-    RawView/RawHighlighter.cpp
+    Views/Raw/RawView.cpp
+    Views/Raw/RawHighlighter.cpp
 )
 
 SET( PUB_HDR_FILES
@@ -35,12 +35,12 @@ SET( PUB_HDR_FILES
     Model/TextFilePatch.hpp
     Model/Patch.hpp
 
-    RawView/RawView.hpp
+    Views/Raw/RawView.hpp
 )
 
 SET( PRIV_HDR_FILES
 
-    RawView/RawHighlighter.hpp
+    Views/Raw/RawHighlighter.hpp
 )
 
 

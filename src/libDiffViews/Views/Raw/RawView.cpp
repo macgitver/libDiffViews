@@ -14,8 +14,8 @@
  *
  */
 
-#include "RawView/RawHighlighter.hpp"
-#include "RawView/RawView.hpp"
+#include "Views/Raw/RawHighlighter.hpp"
+#include "Views/Raw/RawView.hpp"
 
 namespace DiffViews
 {
