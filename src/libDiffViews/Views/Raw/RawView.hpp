@@ -24,7 +24,7 @@ class QTextBrowser;
 namespace DiffViews
 {
 
-    class DIFF_VIEWS_API RawView : public DiffView
+    class RawView : public DiffView
     {
         Q_OBJECT
     public:
