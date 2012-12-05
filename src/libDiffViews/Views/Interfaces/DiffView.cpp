@@ -14,31 +14,18 @@
  *
  */
 
-#ifndef MGV_DIFF_RAW_VIEW_H
-#define MGV_DIFF_RAW_VIEW_H
-
-class QTextBrowser;
-
-#include "libDiffViews/Views/Interfaces/DiffView.hpp"
+#include "DiffView.hpp"
 
 namespace DiffViews
 {
 
-    class DIFF_VIEWS_API RawView : public DiffView
+    DiffView::DiffView( QWidget* parent )
+        : QWidget( parent )
     {
-        Q_OBJECT
-    public:
-        RawView( QWidget* parent = 0 );
-        ~RawView();
+    }
 
-    public:
-        void setPatch( Patch::Ptr patch );
-
-    private:
-        QTextBrowser*   mBrowser;
-        Patch::Ptr      mCurrentPatch;
-    };
+    DiffView::~DiffView()
+    {
+    }
 
 }
-
-#endif

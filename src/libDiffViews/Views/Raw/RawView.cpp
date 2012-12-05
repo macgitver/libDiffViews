@@ -14,6 +14,10 @@
  *
  */
 
+#include <QTextBrowser>
+#include <QVBoxLayout>
+
+#include "Views/Interfaces/DiffViews.hpp"
 #include "Views/Raw/RawHighlighter.hpp"
 #include "Views/Raw/RawView.hpp"
 
@@ -21,13 +25,21 @@ namespace DiffViews
 {
 
     RawView::RawView( QWidget* parent )
-        : QTextBrowser( parent )
+        : DiffView( parent )
     {
-        new RawHighlighter( this );
+        mBrowser = new QTextBrowser;
+        mBrowser->setFrameShape( QFrame::NoFrame );
+
+        QVBoxLayout* l = new QVBoxLayout;
+        l->setMargin( 0 );
+        l->setSpacing( 0 );
+        l->addWidget( mBrowser );
+        setLayout( l );
+
+        new RawHighlighter( mBrowser );
 
     //  setFont( Config::defaultFixedFont() );
 
-        setFrameShape( QFrame::NoFrame );
     }
 
     RawView::~RawView()
@@ -45,7 +57,9 @@ namespace DiffViews
             patchText = patch->toString();
         }
 
-        setText( patchText );
+        mBrowser->setText( patchText );
     }
+
+    MGVDV_IMPLEMENT_DIFFVIEWCREATOR(RawView)
 
 }

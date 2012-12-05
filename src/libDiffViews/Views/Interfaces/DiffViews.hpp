@@ -14,29 +14,41 @@
  *
  */
 
-#ifndef MGV_DIFF_RAW_VIEW_H
-#define MGV_DIFF_RAW_VIEW_H
+#ifndef MGV_DIFF_VIEWS_HPP
+#define MGV_DIFF_VIEWS_HPP
 
-class QTextBrowser;
+#include <QObject>
 
-#include "libDiffViews/Views/Interfaces/DiffView.hpp"
+#include "DiffViewsApi.hpp"
 
 namespace DiffViews
 {
 
-    class DIFF_VIEWS_API RawView : public DiffView
+    class DiffViewCreator;
+
+    class DIFF_VIEWS_API DiffViews : public QObject
     {
         Q_OBJECT
     public:
-        RawView( QWidget* parent = 0 );
-        ~RawView();
+        ~DiffViews();
+        static DiffViews& self();
 
     public:
-        void setPatch( Patch::Ptr patch );
+        QList< DiffViewCreator* > creators() const;
+        void registerCreator( DiffViewCreator* creator );
+        void unregisterCreator( DiffViewCreator* creator );
+
+        DiffViewCreator* defaultCreator();
+        DiffViewCreator* creator( const QString& name );
+
+        void setDefaultCreatorName( const QString& id );
+        QString defaultCreatorName() const;
 
     private:
-        QTextBrowser*   mBrowser;
-        Patch::Ptr      mCurrentPatch;
+        static DiffViews* sSelf;
+        DiffViews();
+        QString mDefaultCreatorName;
+        QList< DiffViewCreator* > mCreators;
     };
 
 }

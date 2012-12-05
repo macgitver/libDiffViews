@@ -19,6 +19,9 @@ SET( SRC_FILES
     Model/FilePatch.cpp
     Model/Patch.cpp
 
+    Views/Interfaces/DiffViews.cpp
+    Views/Interfaces/DiffView.cpp
+
     Views/Raw/RawView.cpp
     Views/Raw/RawHighlighter.cpp
 )
@@ -34,6 +37,9 @@ SET( PUB_HDR_FILES
     Model/BinaryFilePatch.hpp
     Model/TextFilePatch.hpp
     Model/Patch.hpp
+
+    Views/Interfaces/DiffViews.hpp
+    Views/Interfaces/DiffView.hpp
 
     Views/Raw/RawView.hpp
 )
