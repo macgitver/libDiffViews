@@ -19,7 +19,7 @@
 
 #include <QObject>
 
-#include "DiffViewsApi.hpp"
+#include "libDiffViews/DiffViewsApi.hpp"
 
 namespace DiffViews
 {

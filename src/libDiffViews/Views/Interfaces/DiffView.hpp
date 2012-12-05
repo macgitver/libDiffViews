@@ -19,7 +19,6 @@
 
 #include <QWidget>
 
-#include "DiffViewsApi.hpp"
 #include "libDiffViews/Model/Patch.hpp"
 
 namespace DiffViews
