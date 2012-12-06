@@ -25,7 +25,7 @@ namespace DiffViews
     class SeqViewDiffStat : public SeqViewItem
     {
     public:
-        SeqViewDiffStat( const QFont& font);
+        SeqViewDiffStat( const QFont& font );
 
     public:
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );

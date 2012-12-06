@@ -35,8 +35,7 @@ namespace DiffViews
     qreal SeqViewDiffStat::setWidth( qreal width, SeqViewInfo& info )
     {
         QFontMetricsF fm( mFont );
-
-        qreal height = fm.lineSpacing() + 3.;
+        qreal height = qRound( fm.lineSpacing() + 3. );
 
         qreal textWidth = fm.width( mPathName );
         info.maxDiffStatTextLength = qMax( textWidth, info.maxDiffStatTextLength );
@@ -82,16 +81,17 @@ namespace DiffViews
                      Qt::AlignVCenter | Qt::AlignRight, statsText() );
 
         qreal changeWidth = width() - mStatsWidth - mTextWidth - 5 - 3;
+        int halfHeight = height() / 2;
         if( mAdded )
         {
             QRectF r( mTextWidth + 5 + qreal(mMaxChange-mAdded)/mMaxChange*changeWidth, 2,
-                      mAdded / qreal(mMaxChange) * changeWidth, height() / 2 - 2 );
+                      mAdded / qreal(mMaxChange) * changeWidth, halfHeight - 2 );
             p->fillRect( r, mClrAdded );
         }
         if( mRemoved )
         {
-            QRectF r( mTextWidth + 5 + qreal(mMaxChange-mRemoved)/mMaxChange*changeWidth, height() / 2,
-                      mRemoved / qreal(mMaxChange) * changeWidth, height() / 2 - 1 );
+            QRectF r( mTextWidth + 5 + qreal(mMaxChange-mRemoved)/mMaxChange*changeWidth, halfHeight,
+                      mRemoved / qreal(mMaxChange) * changeWidth, halfHeight - 1 );
             p->fillRect( r, mClrRemoved );
         }
 

@@ -23,6 +23,7 @@
 #include "Views/Seq/SequentialView.hpp"
 #include "Views/Seq/SeqViewContainer.hpp"
 #include "Views/Seq/SeqViewDiffStat.hpp"
+#include "Views/Seq/SeqViewDelta.hpp"
 
 namespace DiffViews
 {
@@ -30,6 +31,7 @@ namespace DiffViews
     SequentialView::SequentialView( QWidget* parent )
         : DiffView( parent )
     {
+        mFixedFont = QFont( QLatin1String( "Courier New" ), 12 );
         mScene = NULL;
 
         mView = new QGraphicsView;
@@ -60,14 +62,18 @@ namespace DiffViews
 
         mScene = new QGraphicsScene( this );
 
+        mRoot = new SeqViewContainer;
+
         mDiffStats = new SeqViewContainer;
         mDiffStats->setVerticalMargins( 0., 4. );
 
         mDeltas = new SeqViewContainer;
         mDeltas->setVerticalMargins( 0., 10. );
 
-        mScene->addItem( mDiffStats );
-        mScene->addItem( mDeltas );
+        mDiffStats->setParentItem( mRoot );
+        mDeltas->setParentItem( mRoot );
+        mScene->addItem( mRoot );
+
         mView->setScene( mScene );
 
         if( mCurrentPatch )
@@ -91,6 +97,13 @@ namespace DiffViews
                     item->setChangeCount( added, removed );
 
                     item->setParentItem( mDiffStats );
+
+                    SeqViewDelta* delta = new SeqViewDelta;
+                    delta->setVerticalMargins( 3., 3. );
+                    delta->setParentItem( mDeltas );
+
+                    SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( filePatch, mFixedFont );
+                    deltaHeader->setParentItem( delta );
                 }
             }
         }
@@ -121,11 +134,10 @@ namespace DiffViews
         mInfo.clrSeparator      = QColor( 0xCC, 0xCC, 0xCC );
         mInfo.clrDeltaFirst     = QColor( 0xEE, 0xEE, 0xEE );
         mInfo.clrDeltaSecond    = QColor( 0xCC, 0xCC, 0xCC );
+        mInfo.clrText           = QColor( 0x00, 0x00, 0x00 );
 
         qreal width = mView->viewport()->width();
-        qreal height =
-                mDiffStats->setWidth( width, mInfo ) +
-                mDeltas->setWidth( width, mInfo );
+        qreal height = mRoot->setWidth( width, mInfo );
 
         width = qMax( mInfo.minWidth, width );
 

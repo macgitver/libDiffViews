@@ -62,10 +62,12 @@ namespace DiffViews
         void resizeEvent( QResizeEvent* );
 
     private:
+        QFont               mFixedFont;
         QGraphicsView*      mView;
         QGraphicsScene*     mScene;
         SeqViewContainer*   mDiffStats;
         SeqViewContainer*   mDeltas;
+        SeqViewContainer*   mRoot;
         Patch::Ptr          mCurrentPatch;
         SeqViewInfo         mInfo;
     };
