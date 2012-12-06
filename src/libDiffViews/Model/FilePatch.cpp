@@ -14,13 +14,16 @@
  *
  */
 
+#include <QTextStream>
+
 #include "libDiffViews/Model/TextFilePatch.hpp"
 #include "libDiffViews/Model/BinaryFilePatch.hpp"
 
 namespace DiffViews
 {
 
-    FilePatch::FilePatch()
+    FilePatch::FilePatch( const QStringList& pathNames )
+        : mPathNames( pathNames )
     {
     }
 
@@ -36,6 +39,38 @@ namespace DiffViews
     BinaryFilePatch::Ptr FilePatch::asBinaryFilePatch()
     {
         return BinaryFilePatch::Ptr( NULL );
+    }
+
+    void FilePatch::exportRaw( QTextStream& stream )
+    {
+        Q_ASSERT( mPathNames.count() == 2 );
+
+        stream << "diff " << mOptions.join( QLatin1String( " " ) );
+        if( mOptions.count() > 0 )
+            stream << ' ';
+        stream << mPathNames.join( QLatin1String( " " ) ) << '\n';
+
+        stream << mOptionLines.join( QLatin1String( "\n" ) );
+        if( mOptionLines.count() > 0 )
+            stream << '\n';
+
+        stream << "--- " << mPathNames[ 0 ] << '\n';
+        stream << "+++ " << mPathNames[ 1 ] << '\n';
+    }
+
+    QStringList FilePatch::pathNames() const
+    {
+        return mPathNames;
+    }
+
+    void FilePatch::addOptionLine( const QString& line )
+    {
+        mOptionLines.append( line );
+    }
+
+    void FilePatch::addOption( const QString& option )
+    {
+        mOptions.append( option );
     }
 
 }

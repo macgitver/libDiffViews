@@ -34,15 +34,11 @@ namespace DiffViews
         ~TextFilePatch();
 
     public:
-        QStringList pathNames() const;
         Hunk::List allHunks() const;
         void addHunk( Hunk::Ptr hunk );
         int numHunks() const;
 
         void exportRaw( QTextStream& stream );
-
-        void addOptionLine( const QString& line );
-        void addOption( const QString& option );
 
         void totalChanges( int& added, int& removed ) const;
 
@@ -50,9 +46,6 @@ namespace DiffViews
         TextFilePatch::Ptr asTextFilePatch();
 
     private:
-        QStringList mPathNames;
-        QStringList mOptions;
-        QStringList mOptionLines;
         Hunk::List  mHunks;
     };
 

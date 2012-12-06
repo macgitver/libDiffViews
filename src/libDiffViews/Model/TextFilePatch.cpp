@@ -22,17 +22,12 @@ namespace DiffViews
 {
 
     TextFilePatch::TextFilePatch( const QStringList& pathNames )
-        : mPathNames( pathNames )
+        : FilePatch( pathNames )
     {
     }
 
     TextFilePatch::~TextFilePatch()
     {
-    }
-
-    QStringList TextFilePatch::pathNames() const
-    {
-        return mPathNames;
     }
 
     Hunk::List TextFilePatch::allHunks() const
@@ -50,31 +45,9 @@ namespace DiffViews
         return mHunks.count();
     }
 
-    void TextFilePatch::addOptionLine( const QString& line )
-    {
-        mOptionLines.append( line );
-    }
-
-    void TextFilePatch::addOption( const QString& option )
-    {
-        mOptions.append( option );
-    }
-
     void TextFilePatch::exportRaw( QTextStream& stream )
     {
-        Q_ASSERT( mPathNames.count() == 2 );
-
-        stream << "diff " << mOptions.join( QLatin1String( " " ) );
-        if( mOptions.count() > 0 )
-            stream << ' ';
-        stream << mPathNames.join( QLatin1String( " " ) ) << '\n';
-
-        stream << mOptionLines.join( QLatin1String( "\n" ) );
-        if( mOptionLines.count() > 0 )
-            stream << '\n';
-
-        stream << "--- " << mPathNames[ 0 ] << '\n';
-        stream << "+++ " << mPathNames[ 1 ] << '\n';
+        FilePatch::exportRaw( stream );
 
         for( int i = 0; i < mHunks.count(); i++ )
         {
