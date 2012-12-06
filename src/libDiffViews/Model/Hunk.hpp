@@ -41,6 +41,9 @@ namespace DiffViews
 
         void exportRaw( QTextStream& stream );
 
+        QString area() const;
+        QString completeHeader() const;
+
         void setHunkHeader( const QString& header );
         QString hunkHeader() const;
 

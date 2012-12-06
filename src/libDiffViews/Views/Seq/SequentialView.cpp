@@ -24,6 +24,7 @@
 #include "Views/Seq/SeqViewContainer.hpp"
 #include "Views/Seq/SeqViewDiffStat.hpp"
 #include "Views/Seq/SeqViewDelta.hpp"
+#include "Views/Seq/SeqViewHunk.hpp"
 
 namespace DiffViews
 {
@@ -104,6 +105,15 @@ namespace DiffViews
 
                     SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( filePatch, mFixedFont );
                     deltaHeader->setParentItem( delta );
+
+                    foreach( Hunk::Ptr hunk, textPatch->allHunks() )
+                    {
+                        SeqViewHunkHeader* hunkHead = new SeqViewHunkHeader( hunk, mFixedFont );
+                        hunkHead->setParentItem( delta );
+
+                        SeqViewHunkContent* hunkContent = new SeqViewHunkContent( hunk, mFixedFont );
+                        hunkContent->setParentItem( delta );
+                    }
                 }
             }
         }
