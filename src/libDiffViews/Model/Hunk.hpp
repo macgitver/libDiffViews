@@ -44,6 +44,8 @@ namespace DiffViews
         void setHunkHeader( const QString& header );
         QString hunkHeader() const;
 
+        void totalChanges( int& added, int& removed ) const;
+
     private:
         QString         mHunkHeader;
         HunkPart::List  mParts;

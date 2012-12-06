@@ -92,4 +92,12 @@ namespace DiffViews
         return Ptr( this );
     }
 
+    void TextFilePatch::totalChanges( int& added, int& removed ) const
+    {
+        for( int i = 0; i < mHunks.count(); i++ )
+        {
+            mHunks[ i ]->totalChanges( added, removed );
+        }
+    }
+
 }

@@ -76,5 +76,15 @@ namespace DiffViews
         }
     }
 
+    void HunkPart::totalChanges( int& added, int& removed ) const
+    {
+        if( mType == Context )
+        {
+            return;
+        }
+
+        removed += numLines( 0 );
+        added += numLines( 1 );
+    }
 
 }

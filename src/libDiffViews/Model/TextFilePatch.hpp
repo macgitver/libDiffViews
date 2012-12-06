@@ -44,6 +44,8 @@ namespace DiffViews
         void addOptionLine( const QString& line );
         void addOption( const QString& option );
 
+        void totalChanges( int& added, int& removed ) const;
+
         Type type() const;
         TextFilePatch::Ptr asTextFilePatch();
 

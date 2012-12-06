@@ -85,4 +85,12 @@ namespace DiffViews
         return mHunkHeader;
     }
 
+    void Hunk::totalChanges( int& added, int& removed ) const
+    {
+        for( int i = 0; i < mParts.count(); i++ )
+        {
+            mParts[ i ]->totalChanges( added, removed );
+        }
+    }
+
 }
