@@ -14,6 +14,7 @@
  *
  */
 
+#include <QStringBuilder>
 #include <QTextStream>
 
 #include "libDiffViews/Model/Hunk.hpp"
@@ -57,17 +58,26 @@ namespace DiffViews
         return mParts[ 0 ]->firstLine( side );
     }
 
+    QString Hunk::area() const
+    {
+        return QString( QLatin1String( "@@ %1,%2 %3,%4 @@" ) )
+                .arg( firstLine( 0 ) )
+                .arg( numLines( 0 ) )
+                .arg( firstLine( 1 ) )
+                .arg( numLines( 1 ) );
+    }
+
+    QString Hunk::completeHeader() const
+    {
+        if( mHunkHeader.isEmpty() )
+            return area();
+        else
+            return area() % QChar( L' ' ) % mHunkHeader;
+    }
+
     void Hunk::exportRaw( QTextStream& stream )
     {
-        stream << "@@ " << firstLine( 0 ) << "," << numLines( 0 ) << " "
-               << firstLine( 1 ) << "," << numLines( 1 ) << " @@";
-
-        if( !mHunkHeader.isEmpty() )
-        {
-            stream << " " << mHunkHeader;
-        }
-
-        stream << "\n";
+        stream << completeHeader() << "\n";
 
         for( int i = 0; i < mParts.count(); i++ )
         {
@@ -83,6 +93,14 @@ namespace DiffViews
     QString Hunk::hunkHeader() const
     {
         return mHunkHeader;
+    }
+
+    void Hunk::totalChanges( int& added, int& removed ) const
+    {
+        for( int i = 0; i < mParts.count(); i++ )
+        {
+            mParts[ i ]->totalChanges( added, removed );
+        }
     }
 
 }

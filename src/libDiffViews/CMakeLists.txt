@@ -24,6 +24,13 @@ SET( SRC_FILES
 
     Views/Raw/RawView.cpp
     Views/Raw/RawHighlighter.cpp
+
+    Views/Seq/SequentialView.cpp
+    Views/Seq/SeqViewItem.cpp
+    Views/Seq/SeqViewDelta.cpp
+    Views/Seq/SeqViewHunk.cpp
+    Views/Seq/SeqViewDiffStat.cpp
+    Views/Seq/SeqViewContainer.cpp
 )
 
 SET( PUB_HDR_FILES
@@ -40,13 +47,19 @@ SET( PUB_HDR_FILES
 
     Views/Interfaces/DiffViews.hpp
     Views/Interfaces/DiffView.hpp
-
-    Views/Raw/RawView.hpp
 )
 
 SET( PRIV_HDR_FILES
 
+    Views/Raw/RawView.hpp
     Views/Raw/RawHighlighter.hpp
+
+    Views/Seq/SequentialView.hpp
+    Views/Seq/SeqViewItem.hpp
+    Views/Seq/SeqViewDelta.hpp
+    Views/Seq/SeqViewHunk.hpp
+    Views/Seq/SeqViewDiffStat.hpp
+    Views/Seq/SeqViewContainer.hpp
 )
 
 

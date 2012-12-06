@@ -1,5 +1,5 @@
 /*
- * libDiffViews
+ * MacGitver
  * Copyright (C) 2012 Sascha Cunz <sascha@babbelbox.org>
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the
@@ -14,39 +14,30 @@
  *
  */
 
-#ifndef DIFFVIEWS_MODEL_TEXT_FILE_PATCH_HPP
-#define DIFFVIEWS_MODEL_TEXT_FILE_PATCH_HPP
+#ifndef MGV_DIFF_SEQ_VIEW_CONTAINER_HPP
+#define MGV_DIFF_SEQ_VIEW_CONTAINER_HPP
 
-#include "libDiffViews/Model/Hunk.hpp"
-#include "libDiffViews/Model/FilePatch.hpp"
+#include "SeqViewItem.hpp"
 
 namespace DiffViews
 {
 
-    class DIFF_VIEWS_API TextFilePatch : public FilePatch
+    class SeqViewContainer : public SeqViewItem
     {
     public:
-        typedef QExplicitlySharedDataPointer< TextFilePatch > Ptr;
-        typedef QList< Ptr > List;
+        SeqViewContainer();
 
     public:
-        TextFilePatch( const QStringList& pathNames );
-        ~TextFilePatch();
+        void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     public:
-        Hunk::List allHunks() const;
-        void addHunk( Hunk::Ptr hunk );
-        int numHunks() const;
-
-        void exportRaw( QTextStream& stream );
-
-        void totalChanges( int& added, int& removed ) const;
-
-        Type type() const;
-        TextFilePatch::Ptr asTextFilePatch();
+        qreal setWidth( qreal width, SeqViewInfo& info );
+        void postRendering( const SeqViewInfo& info );
+        void setVerticalMargins( qreal top, qreal bottom );
 
     private:
-        Hunk::List  mHunks;
+        qreal           mMarginTop;
+        qreal           mMarginBottom;
     };
 
 }

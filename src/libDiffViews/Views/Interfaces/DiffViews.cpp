@@ -23,11 +23,15 @@ namespace DiffViews
     class RawView;
     MGVDV_DECLARE_DIFFVIEWCREATOR(RawView)
 
+    class SequentialView;
+    MGVDV_DECLARE_DIFFVIEWCREATOR(SequentialView)
+
     DiffViews::DiffViews()
     {
         sSelf = this;
         registerDiffView_RawView();
-        setDefaultCreatorName( QLatin1String( "RawView" ) );
+        registerDiffView_SequentialView();
+        setDefaultCreatorName( QLatin1String( "SequentialView" ) );
     }
 
     DiffViews::~DiffViews()

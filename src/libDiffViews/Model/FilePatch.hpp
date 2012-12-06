@@ -18,6 +18,7 @@
 #define DIFFVIEWS_MODEL_FILE_PATCH_HPP
 
 #include <QList>
+#include <QStringList>
 #include <QSharedData>
 
 class QTextStream;
@@ -43,16 +44,27 @@ namespace DiffViews
         };
 
     protected:
-        FilePatch();
+        FilePatch( const QStringList& pathNames );
 
     public:
         virtual ~FilePatch();
 
     public:
         virtual Type type() const = 0;
-        virtual void exportRaw( QTextStream& stream ) = 0;
+        virtual void exportRaw( QTextStream& stream );
         virtual QExplicitlySharedDataPointer< TextFilePatch > asTextFilePatch();
         virtual QExplicitlySharedDataPointer< BinaryFilePatch > asBinaryFilePatch();
+
+    public:
+        QStringList pathNames() const;
+
+        void addOptionLine( const QString& line );
+        void addOption( const QString& option );
+
+    private:
+        QStringList mPathNames;
+        QStringList mOptions;
+        QStringList mOptionLines;
     };
 
 }
