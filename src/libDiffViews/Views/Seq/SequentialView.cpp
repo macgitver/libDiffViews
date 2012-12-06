@@ -115,8 +115,8 @@ namespace DiffViews
         mInfo.maxDiffStatTextLength = 0;
         mInfo.maxDiffStatStatLength = 0;
         mInfo.maxChange = 0;
-        mInfo.clrAdded          = QColor( 0xCC, 0x99, 0x99 );
-        mInfo.clrRemoved        = QColor( 0x99, 0xCC, 0x99 );
+        mInfo.clrAdded          = QColor( 0x99, 0xCC, 0x99 );
+        mInfo.clrRemoved        = QColor( 0xCC, 0x99, 0x99 );
         mInfo.clrContext        = QColor( 0x00, 0x00, 0x00 );
         mInfo.clrSeparator      = QColor( 0xCC, 0xCC, 0xCC );
         mInfo.clrDeltaFirst     = QColor( 0xEE, 0xEE, 0xEE );
