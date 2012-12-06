@@ -58,6 +58,8 @@ namespace DiffViews
 
         void exportRaw( QTextStream& stream );
 
+        void totalChanges( int& added, int& removed ) const;
+
     private:
         Type            mType;
         DiffLines::List mSides;
