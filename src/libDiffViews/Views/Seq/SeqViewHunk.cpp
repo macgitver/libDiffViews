@@ -208,6 +208,13 @@ namespace DiffViews
 
             top += lh;
         }
+
+        p->setPen( mClrSeparator );
+        p->drawLine( 12 + mSpaceLeft + 1, 0,
+                     12 + mSpaceLeft + 1, height() );
+
+        p->drawLine( 12 + mSpaceLeft + mSpaceRight + 2, 0,
+                     12 + mSpaceLeft + mSpaceRight + 2, height() );
     }
 
 }
