@@ -64,7 +64,9 @@ namespace DiffViews
         int top = 0;
         foreach( QString line, mTextLines )
         {
-            p->drawText( QRectF( 12, top, width() - 24, fm.lineSpacing() ), line );
+            p->drawText( QRectF( 12, top, width() - 24, fm.lineSpacing() ),
+                         Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                         line );
             top += qRound( fm.lineSpacing() );
         }
     }

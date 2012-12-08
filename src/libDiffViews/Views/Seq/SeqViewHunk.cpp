@@ -54,7 +54,8 @@ namespace DiffViews
 
         p->setPen( mClrText );
         p->setFont( mFont );
-        p->drawText( QRectF( 12, 1, width() - 24, height() - 2 ), mText );
+        p->drawText( QRectF( 12, 1, width() - 24, height() - 2 ),
+                     Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere, mText );
     }
 
     SeqViewHunkContent::SeqViewHunkContent( Hunk::Ptr hunk, const QFont& font )
@@ -190,20 +191,20 @@ namespace DiffViews
             if( mLines[ i ].leftNr )
             {
                 p->drawText( QRectF( 12, 1 + top, mSpaceLeft, lh - 1 ),
-                             QString::number( mLines[ i ].leftNr ),
-                             Qt::AlignVCenter | Qt::AlignRight );
+                             Qt::AlignRight | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                             QString::number( mLines[ i ].leftNr ) );
             }
 
             if( mLines[ i ].rightNr )
             {
                 p->drawText( QRectF( 12 + mSpaceLeft + 2, 1 + top, mSpaceRight, lh - 1 ),
-                             QString::number( mLines[ i ].rightNr ),
-                             Qt::AlignVCenter | Qt::AlignRight  );
+                             Qt::AlignRight | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                             QString::number( mLines[ i ].rightNr ) );
             }
 
             p->drawText( QRectF( left, 1 + top, wide, lh - 1 ),
-                         mLines[ i ].text,
-                         Qt::AlignVCenter | Qt::AlignLeft  );
+                         Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                         mLines[ i ].text );
 
             top += lh;
         }
