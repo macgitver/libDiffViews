@@ -83,29 +83,28 @@ namespace DiffViews
             FilePatch::List paths = mCurrentPatch->allPaths();
             foreach( FilePatch::Ptr filePatch, paths )
             {
+                SeqViewDiffStat* item = new SeqViewDiffStat( &mInfo, font() );
+                item->setPathName( filePatch->pathNames()[ 0 ] );
+                item->setParentItem( mDiffStats );
+
+                SeqViewContainer* delta = new SeqViewContainer( &mInfo );
+                delta->setVerticalMargins( 3., 3. );
+                delta->setParentItem( mDeltas );
+
+                SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( &mInfo, filePatch, mFixedFont );
+                deltaHeader->setParentItem( delta );
+
                 if( filePatch->type() == FilePatch::BinaryPatch )
                 {
-                    continue;   // for now
+                    item->setBinary( true );
                 }
                 else
                 {
                     TextFilePatch::Ptr textPatch = filePatch->asTextFilePatch();
 
-                    SeqViewDiffStat* item = new SeqViewDiffStat( &mInfo, font() );
-                    item->setPathName( textPatch->pathNames()[ 0 ] );
-
                     int added = 0, removed = 0;
                     textPatch->totalChanges( added, removed );
                     item->setChangeCount( added, removed );
-
-                    item->setParentItem( mDiffStats );
-
-                    SeqViewContainer* delta = new SeqViewContainer( &mInfo );
-                    delta->setVerticalMargins( 3., 3. );
-                    delta->setParentItem( mDeltas );
-
-                    SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( &mInfo, filePatch, mFixedFont );
-                    deltaHeader->setParentItem( delta );
 
                     foreach( Hunk::Ptr hunk, textPatch->allHunks() )
                     {

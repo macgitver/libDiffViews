@@ -103,6 +103,11 @@ namespace DiffViews
         mPathName = name;
     }
 
+    void SeqViewDiffStat::setBinary( bool bin )
+    {
+        mBinary = bin;
+    }
+
     void SeqViewDiffStat::setChangeCount( int added, int removed )
     {
         mAdded = added;

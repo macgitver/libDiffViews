@@ -36,6 +36,7 @@ namespace DiffViews
 
         void setPathName( const QString& name );
         void setChangeCount( int added, int removed );
+        void setBinary( bool bin );
 
     private:
         QString statsText() const;
