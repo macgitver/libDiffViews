@@ -31,7 +31,11 @@ namespace DiffViews
         sSelf = this;
         registerDiffView_RawView();
         registerDiffView_SequentialView();
+
         setDefaultCreatorName( QLatin1String( "SequentialView" ) );
+
+        mFixedFont = QFont( QLatin1String( "Courier New" ), 10 );
+        mVariableFont = QFont( QLatin1String( "Arial" ), 10 );
     }
 
     DiffViews::~DiffViews()
@@ -94,6 +98,35 @@ namespace DiffViews
     QString DiffViews::defaultCreatorName() const
     {
         return mDefaultCreatorName;
+    }
+
+    void DiffViews::setFixedFont( const QFont& font )
+    {
+        mFixedFont = font;
+        emit fontsChanged();
+    }
+
+    void DiffViews::setVariableFont( const QFont& font )
+    {
+        mVariableFont = font;
+        emit fontsChanged();
+    }
+
+    void DiffViews::setFonts( const QFont& fixed, const QFont& variable )
+    {
+        mVariableFont = variable;
+        mFixedFont = fixed;
+        emit fontsChanged();
+    }
+
+    QFont DiffViews::fixedFont() const
+    {
+        return mFixedFont;
+    }
+
+    QFont DiffViews::variableFont() const
+    {
+        return mVariableFont;
     }
 
 }
