@@ -57,9 +57,11 @@ namespace DiffViews
     private:
         void generateScene();
         void updateWidth();
+        void maybeUpdateWidth();
 
     protected:
         void resizeEvent( QResizeEvent* );
+        void showEvent( QShowEvent* );
 
     private:
         QFont               mFixedFont;
@@ -69,6 +71,7 @@ namespace DiffViews
         SeqViewContainer*   mDeltas;
         SeqViewContainer*   mRoot;
         Patch::Ptr          mCurrentPatch;
+        qreal               mCachedWidth;
         SeqViewInfo         mInfo;
     };
 

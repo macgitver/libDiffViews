@@ -32,6 +32,7 @@ namespace DiffViews
     SequentialView::SequentialView( QWidget* parent )
         : DiffView( parent )
     {
+        mCachedWidth = -1;
         mFixedFont = QFont( QLatin1String( "Courier New" ), 12 );
         mScene = NULL;
 
@@ -127,6 +128,23 @@ namespace DiffViews
         updateWidth();
     }
 
+    void SequentialView::showEvent( QShowEvent* ev )
+    {
+        maybeUpdateWidth();
+        QWidget::showEvent( ev );
+    }
+
+    void SequentialView::maybeUpdateWidth()
+    {
+        qreal width = mView->viewport()->width();
+        width = qMax( mInfo.minWidth, width );
+
+        if( mCachedWidth != width )
+        {
+            updateWidth();
+        }
+    }
+
     void SequentialView::updateWidth()
     {
         if( !mScene || !mDiffStats )
@@ -155,6 +173,8 @@ namespace DiffViews
 
         mDiffStats->postRendering( mInfo );
         mDeltas->postRendering( mInfo );
+
+        mCachedWidth = width;
     }
 
     MGVDV_IMPLEMENT_DIFFVIEWCREATOR(SequentialView)
