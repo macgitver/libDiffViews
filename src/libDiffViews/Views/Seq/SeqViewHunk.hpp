@@ -27,17 +27,13 @@ namespace DiffViews
     class SeqViewHunkHeader : public SeqViewItem
     {
     public:
-        SeqViewHunkHeader( Hunk::Ptr patch, const QFont& font );
+        SeqViewHunkHeader( SeqViewInfo* info, Hunk::Ptr patch, const QFont& font );
 
     public:
-        qreal setWidth( qreal width, SeqViewInfo& info );
-        void postRendering( const SeqViewInfo& info );
+        qreal setWidth( qreal width );
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     private:
-        QColor  mClrDeltaFirst;
-        QColor  mClrSeparator;
-        QColor  mClrText;
         QFont   mFont;
         QString mText;
     };
@@ -45,19 +41,13 @@ namespace DiffViews
     class SeqViewHunkContent : public SeqViewItem
     {
     public:
-        SeqViewHunkContent( Hunk::Ptr patch, const QFont& font );
+        SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr patch, const QFont& font );
 
     public:
-        qreal setWidth( qreal width, SeqViewInfo& info );
-        void postRendering( const SeqViewInfo& info );
+        qreal setWidth( qreal width );
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     private:
-        QColor  mClrDeltaFirst;
-        QColor  mClrSeparator;
-        QColor  mClrText;
-        QColor  mClrAdded;
-        QColor  mClrRemoved;
         QFont   mFont;
         int     mSpaceLeft;
         int     mSpaceRight;

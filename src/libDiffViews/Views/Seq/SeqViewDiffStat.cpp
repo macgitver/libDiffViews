@@ -25,25 +25,26 @@
 namespace DiffViews
 {
 
-    SeqViewDiffStat::SeqViewDiffStat( const QFont& font )
+    SeqViewDiffStat::SeqViewDiffStat( SeqViewInfo* info, const QFont& font )
+        : SeqViewItem( info )
     {
         mFont = font;
         mAdded = mRemoved = 0;
         mBinary = false;
     }
 
-    qreal SeqViewDiffStat::setWidth( qreal width, SeqViewInfo& info )
+    qreal SeqViewDiffStat::setWidth( qreal width )
     {
         QFontMetricsF fm( mFont );
         qreal height = qRound( fm.lineSpacing() + 3. );
 
         qreal textWidth = fm.width( mPathName );
-        info.maxDiffStatTextLength = qMax( textWidth, info.maxDiffStatTextLength );
+        info()->maxDiffStatTextLength = qMax( textWidth, info()->maxDiffStatTextLength );
 
         qreal statsWidth = fm.width( statsText() );
-        info.maxDiffStatStatLength = qMax( statsWidth, info.maxDiffStatStatLength );
+        info()->maxDiffStatStatLength = qMax( statsWidth, info()->maxDiffStatStatLength );
 
-        info.maxChange = qMax( qMax( mAdded, mRemoved ), info.maxChange );
+        info()->maxChange = qMax( qMax( mAdded, mRemoved ), info()->maxChange );
 
         SeqViewItem::setWidth( width, height );
 
@@ -59,21 +60,19 @@ namespace DiffViews
         return QString( QLatin1String( "+%1 -%2" ) ).arg( mAdded ).arg( mRemoved );
     }
 
-    void SeqViewDiffStat::postRendering( const SeqViewInfo& info )
+    void SeqViewDiffStat::postRendering()
     {
-        mTextWidth = info.maxDiffStatTextLength;
-        mStatsWidth = info.maxDiffStatStatLength;
-        mClrSeparator = info.clrSeparator;
-        mClrAdded = info.clrAdded;
-        mClrRemoved = info.clrRemoved;
-        mClrText = info.clrText;
-        mMaxChange = info.maxChange;
+        mTextWidth = info()->maxDiffStatTextLength;
+        mStatsWidth = info()->maxDiffStatStatLength;
+        mMaxChange = info()->maxChange;
     }
 
     void SeqViewDiffStat::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
+        SeqViewInfo* ifo = info();
+
         p->setFont( mFont );
-        p->setPen( mClrText );
+        p->setPen( ifo->clrText );
         p->drawText( QRectF( 5, 0, mTextWidth, height() ),
                      Qt::AlignVCenter | Qt::AlignLeft, mPathName );
 
@@ -86,16 +85,16 @@ namespace DiffViews
         {
             QRectF r( mTextWidth + 5 + qreal(mMaxChange-mAdded)/mMaxChange*changeWidth, 2,
                       mAdded / qreal(mMaxChange) * changeWidth, halfHeight - 2 );
-            p->fillRect( r, mClrAdded );
+            p->fillRect( r, ifo->clrAdded );
         }
         if( mRemoved )
         {
             QRectF r( mTextWidth + 5 + qreal(mMaxChange-mRemoved)/mMaxChange*changeWidth, halfHeight,
                       mRemoved / qreal(mMaxChange) * changeWidth, halfHeight - 1 );
-            p->fillRect( r, mClrRemoved );
+            p->fillRect( r, ifo->clrRemoved );
         }
 
-        p->setPen( mClrSeparator );
+        p->setPen( ifo->clrSeparator );
         p->drawLine( QPointF( 0, height() ), QPointF( width(), height() ) );
     }
 

@@ -25,14 +25,14 @@ namespace DiffViews
     class SeqViewDiffStat : public SeqViewItem
     {
     public:
-        SeqViewDiffStat( const QFont& font );
+        SeqViewDiffStat( SeqViewInfo* info, const QFont& font );
 
     public:
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     public:
-        qreal setWidth( qreal width, SeqViewInfo& info );
-        void postRendering( const SeqViewInfo& info );
+        qreal setWidth( qreal width );
+        void postRendering();
 
         void setPathName( const QString& name );
         void setChangeCount( int added, int removed );
@@ -49,10 +49,6 @@ namespace DiffViews
         int                 mRemoved;
         int                 mMaxChange;
         bool                mBinary;
-        QColor              mClrSeparator;
-        QColor              mClrAdded;
-        QColor              mClrRemoved;
-        QColor              mClrText;
     };
 
 }

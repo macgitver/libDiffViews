@@ -19,13 +19,14 @@
 namespace DiffViews
 {
 
-    SeqViewContainer::SeqViewContainer()
+    SeqViewContainer::SeqViewContainer( SeqViewInfo* info )
+        : SeqViewItem( info )
     {
         mMarginTop = 0.;
         mMarginBottom = 0.;
     }
 
-    qreal SeqViewContainer::setWidth( qreal width, SeqViewInfo& info )
+    qreal SeqViewContainer::setWidth( qreal width )
     {
         qreal height = mMarginTop;
 
@@ -35,7 +36,7 @@ namespace DiffViews
             SeqViewItem* it = static_cast< SeqViewItem* >( itGI );
             QPointF posChild( 0, height );
             it->setPos( posChild );
-            height += it->setWidth( width, info );
+            height += it->setWidth( width );
         }
 
         height += mMarginBottom;
@@ -44,13 +45,13 @@ namespace DiffViews
         return height;
     }
 
-    void SeqViewContainer::postRendering( const SeqViewInfo& info )
+    void SeqViewContainer::postRendering()
     {
         QList< QGraphicsItem* > items = childItems();
         foreach( QGraphicsItem* itGI, items )
         {
             SeqViewItem* it = static_cast< SeqViewItem* >( itGI );
-            it->postRendering( info );
+            it->postRendering();
         }
     }
 

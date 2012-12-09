@@ -23,8 +23,9 @@
 namespace DiffViews
 {
 
-    SeqViewDeltaHeader::SeqViewDeltaHeader( FilePatch::Ptr patch, const QFont& font )
-        : mFont( font )
+    SeqViewDeltaHeader::SeqViewDeltaHeader( SeqViewInfo* info, FilePatch::Ptr patch, const QFont& font )
+        : SeqViewItem( info )
+        , mFont( font )
     {
         QString strRaw;
         QTextStream rawStream( &strRaw );
@@ -32,7 +33,7 @@ namespace DiffViews
         mTextLines = strRaw.split( QChar( L'\n' ), QString::SkipEmptyParts );
     }
 
-    qreal SeqViewDeltaHeader::setWidth( qreal width, SeqViewInfo& info )
+    qreal SeqViewDeltaHeader::setWidth( qreal width )
     {
         QFontMetricsF fm( mFont );
         qreal height = qRound( fm.lineSpacing() ) * mTextLines.count();
@@ -40,26 +41,20 @@ namespace DiffViews
         return height;
     }
 
-    void SeqViewDeltaHeader::postRendering( const SeqViewInfo& info )
-    {
-        mClrSeparator = info.clrSeparator;
-        mClrDeltaFirst = info.clrDeltaFirst;
-        mClrDeltaSecond = info.clrDeltaSecond;
-        mClrText = info.clrText;
-    }
-
     void SeqViewDeltaHeader::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
+        SeqViewInfo* i = info();
+
         QFontMetricsF fm( mFont );
         QLinearGradient grad( 0., 0., 0., height() );
 
-        grad.setColorAt( 0., mClrDeltaFirst );
-        grad.setColorAt( 1., mClrDeltaSecond );
+        grad.setColorAt( 0., i->clrDeltaFirst );
+        grad.setColorAt( 1., i->clrDeltaSecond );
         p->setBrush( grad );
-        p->setPen( mClrSeparator );
+        p->setPen( i->clrSeparator );
         p->drawRect( 10, 0, width() - 20, height() );
 
-        p->setPen( mClrText );
+        p->setPen( i->clrText );
         p->setFont( mFont );
         int top = 0;
         foreach( QString line, mTextLines )
@@ -69,11 +64,6 @@ namespace DiffViews
                          line );
             top += qRound( fm.lineSpacing() );
         }
-    }
-
-
-    SeqViewDelta::SeqViewDelta()
-    {
     }
 
 }

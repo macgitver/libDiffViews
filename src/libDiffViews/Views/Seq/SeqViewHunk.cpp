@@ -24,13 +24,14 @@
 namespace DiffViews
 {
 
-    SeqViewHunkHeader::SeqViewHunkHeader( Hunk::Ptr hunk, const QFont& font )
-        : mFont( font )
+    SeqViewHunkHeader::SeqViewHunkHeader( SeqViewInfo* info, Hunk::Ptr hunk, const QFont& font )
+        : SeqViewItem( info )
+        , mFont( font )
         , mText( hunk->completeHeader() )
     {
     }
 
-    qreal SeqViewHunkHeader::setWidth( qreal width, SeqViewInfo& info )
+    qreal SeqViewHunkHeader::setWidth( qreal width )
     {
         QFontMetricsF fm( mFont );
         qreal height = qRound( fm.lineSpacing() );
@@ -39,27 +40,23 @@ namespace DiffViews
         return height;
     }
 
-    void SeqViewHunkHeader::postRendering( const SeqViewInfo& info )
-    {
-        mClrSeparator = info.clrSeparator;
-        mClrText = info.clrText;
-        mClrDeltaFirst = info.clrDeltaFirst;
-    }
-
     void SeqViewHunkHeader::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
-        p->setPen( mClrSeparator );
-        p->setBrush( mClrDeltaFirst );
+        SeqViewInfo* i = info();
+
+        p->setPen( i->clrSeparator );
+        p->setBrush( i->clrDeltaFirst );
         p->drawRect( 10, 0, width() - 20, height() );
 
-        p->setPen( mClrText );
+        p->setPen( i->clrText );
         p->setFont( mFont );
         p->drawText( QRectF( 12, 1, width() - 24, height() - 2 ),
                      Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere, mText );
     }
 
-    SeqViewHunkContent::SeqViewHunkContent( Hunk::Ptr hunk, const QFont& font )
-        : mFont( font )
+    SeqViewHunkContent::SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr hunk, const QFont& font )
+        : SeqViewItem( info )
+        , mFont( font )
     {
         #if 0
         QString s; QTextStream ts( &s ); hunk->exportRaw( ts );
@@ -129,7 +126,7 @@ namespace DiffViews
         }
     }
 
-    qreal SeqViewHunkContent::setWidth( qreal width, SeqViewInfo& info )
+    qreal SeqViewHunkContent::setWidth( qreal width )
     {
         QFontMetricsF fm( mFont );
         qreal height = qRound( fm.lineSpacing() + 1 ) * mLines.count();
@@ -154,23 +151,16 @@ namespace DiffViews
         return height;
     }
 
-    void SeqViewHunkContent::postRendering( const SeqViewInfo& info )
-    {
-        mClrSeparator = info.clrSeparator;
-        mClrText = info.clrText;
-        mClrDeltaFirst = info.clrDeltaFirst;
-        mClrAdded = info.clrAdded;
-        mClrRemoved = info.clrRemoved;
-    }
-
     void SeqViewHunkContent::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
+        SeqViewInfo* ifo = info();
+
         QFontMetricsF fm( mFont );
         qreal lh = qRound( fm.lineSpacing() + 1 );
         qreal top;
 
-        p->setPen( mClrSeparator );
-        p->setBrush( mClrDeltaFirst );
+        p->setPen( ifo->clrSeparator );
+        p->setBrush( ifo->clrDeltaFirst );
         p->drawRect( 10, 0, width() - 20, height() );
 
         qreal left = 12 + mSpaceLeft + mSpaceRight + 6;
@@ -179,13 +169,13 @@ namespace DiffViews
         {
             if( !mLines[ i ].rightNr )
             {
-                p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), mClrRemoved );
+                p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), ifo->clrRemoved );
             }
             else if( !mLines[ i ].leftNr )
             {
-                p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), mClrAdded );
+                p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), ifo->clrAdded );
             }
-            p->setPen( mClrText );
+            p->setPen( ifo->clrText );
             p->setFont( mFont );
 
             if( mLines[ i ].leftNr )
@@ -209,7 +199,7 @@ namespace DiffViews
             top += lh;
         }
 
-        p->setPen( mClrSeparator );
+        p->setPen( ifo->clrSeparator );
         p->drawLine( 12 + mSpaceLeft + 1, 0,
                      12 + mSpaceLeft + 1, height() );
 

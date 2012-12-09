@@ -64,12 +64,12 @@ namespace DiffViews
 
         mScene = new QGraphicsScene( this );
 
-        mRoot = new SeqViewContainer;
+        mRoot = new SeqViewContainer( &mInfo );
 
-        mDiffStats = new SeqViewContainer;
+        mDiffStats = new SeqViewContainer( &mInfo );
         mDiffStats->setVerticalMargins( 0., 4. );
 
-        mDeltas = new SeqViewContainer;
+        mDeltas = new SeqViewContainer( &mInfo );
         mDeltas->setVerticalMargins( 0., 10. );
 
         mDiffStats->setParentItem( mRoot );
@@ -91,7 +91,7 @@ namespace DiffViews
                 {
                     TextFilePatch::Ptr textPatch = filePatch->asTextFilePatch();
 
-                    SeqViewDiffStat* item = new SeqViewDiffStat( font() );
+                    SeqViewDiffStat* item = new SeqViewDiffStat( &mInfo, font() );
                     item->setPathName( textPatch->pathNames()[ 0 ] );
 
                     int added = 0, removed = 0;
@@ -100,19 +100,19 @@ namespace DiffViews
 
                     item->setParentItem( mDiffStats );
 
-                    SeqViewDelta* delta = new SeqViewDelta;
+                    SeqViewContainer* delta = new SeqViewContainer( &mInfo );
                     delta->setVerticalMargins( 3., 3. );
                     delta->setParentItem( mDeltas );
 
-                    SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( filePatch, mFixedFont );
+                    SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( &mInfo, filePatch, mFixedFont );
                     deltaHeader->setParentItem( delta );
 
                     foreach( Hunk::Ptr hunk, textPatch->allHunks() )
                     {
-                        SeqViewHunkHeader* hunkHead = new SeqViewHunkHeader( hunk, mFixedFont );
+                        SeqViewHunkHeader* hunkHead = new SeqViewHunkHeader( &mInfo, hunk, mFixedFont );
                         hunkHead->setParentItem( delta );
 
-                        SeqViewHunkContent* hunkContent = new SeqViewHunkContent( hunk, mFixedFont );
+                        SeqViewHunkContent* hunkContent = new SeqViewHunkContent( &mInfo, hunk, mFixedFont );
                         hunkContent->setParentItem( delta );
                     }
                 }
@@ -165,14 +165,13 @@ namespace DiffViews
         mInfo.clrText           = QColor( 0x00, 0x00, 0x00 );
 
         qreal width = mView->viewport()->width();
-        qreal height = mRoot->setWidth( width, mInfo );
+        qreal height = mRoot->setWidth( width );
 
         width = qMax( mInfo.minWidth, width );
 
         mScene->setSceneRect( 0., 0., width, height );
 
-        mDiffStats->postRendering( mInfo );
-        mDeltas->postRendering( mInfo );
+        mRoot->postRendering();
 
         mCachedWidth = width;
     }

@@ -27,27 +27,15 @@ namespace DiffViews
     class SeqViewDeltaHeader : public SeqViewItem
     {
     public:
-        SeqViewDeltaHeader( FilePatch::Ptr patch, const QFont& font );
+        SeqViewDeltaHeader( SeqViewInfo* info, FilePatch::Ptr patch, const QFont& font );
 
     public:
-        qreal setWidth( qreal width, SeqViewInfo& info );
-        void postRendering( const SeqViewInfo& info );
+        qreal setWidth( qreal width );
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     private:
-        QColor          mClrSeparator;
-        QColor          mClrDeltaFirst;
-        QColor          mClrDeltaSecond;
-        QColor          mClrText;
         QFont           mFont;
         QStringList     mTextLines;
-    };
-
-    class SeqViewDelta : public SeqViewContainer
-    {
-    public:
-        SeqViewDelta();
-
     };
 
 }

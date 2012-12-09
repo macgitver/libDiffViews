@@ -25,14 +25,14 @@ namespace DiffViews
     class SeqViewContainer : public SeqViewItem
     {
     public:
-        SeqViewContainer();
+        SeqViewContainer( SeqViewInfo* info );
 
     public:
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     public:
-        qreal setWidth( qreal width, SeqViewInfo& info );
-        void postRendering( const SeqViewInfo& info );
+        qreal setWidth( qreal width );
+        void postRendering();
         void setVerticalMargins( qreal top, qreal bottom );
 
     private:

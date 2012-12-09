@@ -19,8 +19,9 @@
 namespace DiffViews
 {
 
-    SeqViewItem::SeqViewItem()
-        : mWidth( .0 )
+    SeqViewItem::SeqViewItem( SeqViewInfo* info )
+        : mInfo( info )
+        , mWidth( .0 )
         , mHeight( .0 )
     {
     }
@@ -41,7 +42,7 @@ namespace DiffViews
         }
     }
 
-    void SeqViewItem::postRendering( const SeqViewInfo& info )
+    void SeqViewItem::postRendering()
     {
     }
 
@@ -53,6 +54,11 @@ namespace DiffViews
     qreal SeqViewItem::height() const
     {
         return mHeight;
+    }
+
+    SeqViewInfo* SeqViewItem::info() const
+    {
+        return mInfo;
     }
 
 }

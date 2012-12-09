@@ -26,23 +26,25 @@ namespace DiffViews
 
     class SeqViewItem : public QGraphicsItem
     {
-    public:
-        SeqViewItem();
+    protected:
+        SeqViewItem( SeqViewInfo* info );
 
     public:
         QRectF boundingRect() const;
 
-        virtual qreal setWidth( qreal width, SeqViewInfo& info ) = 0;
-        virtual void postRendering( const SeqViewInfo& info );
+        virtual qreal setWidth( qreal width ) = 0;
+        virtual void postRendering();
 
     protected:
         void setWidth( qreal width, qreal height );
         qreal width() const;
         qreal height() const;
+        SeqViewInfo* info() const;
 
     private:
-        qreal                       mWidth;
-        qreal                       mHeight;
+        SeqViewInfo*    mInfo;
+        qreal           mWidth;
+        qreal           mHeight;
     };
 
 }
