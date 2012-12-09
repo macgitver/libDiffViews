@@ -38,12 +38,19 @@ namespace DiffViews
 
         new RawHighlighter( mBrowser );
 
-    //  setFont( Config::defaultFixedFont() );
+        setFont( DiffViews::self().fixedFont() );
 
+        connect( &DiffViews::self(), SIGNAL(fontsChanged()),
+                 this, SLOT(fontsChanged()) );
     }
 
     RawView::~RawView()
     {
+    }
+
+    void RawView::fontChanged()
+    {
+        setFont( DiffViews::self().fixedFont() );
     }
 
     void RawView::setPatch( Patch::Ptr patch )

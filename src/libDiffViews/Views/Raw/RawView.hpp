@@ -34,6 +34,9 @@ namespace DiffViews
     public:
         void setPatch( Patch::Ptr patch );
 
+    private slots:
+        void fontChanged();
+
     private:
         QTextBrowser*   mBrowser;
         Patch::Ptr      mCurrentPatch;
