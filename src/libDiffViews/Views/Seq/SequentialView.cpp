@@ -33,8 +33,6 @@ namespace DiffViews
         : DiffView( parent )
     {
         mCachedWidth = -1;
-        mInfo.mFixed = QFont( QLatin1String( "Courier New" ), 12 );
-        mInfo.mVariable = font();
         mScene = NULL;
 
         mView = new QGraphicsView;
@@ -46,6 +44,12 @@ namespace DiffViews
         l->setSpacing( 0 );
         l->addWidget( mView );
         setLayout( l );
+
+        mInfo.mFixed = DiffViews::self().fixedFont();
+        mInfo.mVariable = DiffViews::self().variableFont();
+
+        connect( &DiffViews::self(), SIGNAL(fontsChanged()),
+                 this, SLOT(fontsChanged()) );
     }
 
     SequentialView::~SequentialView()
@@ -174,6 +178,13 @@ namespace DiffViews
         mRoot->postRendering();
 
         mCachedWidth = width;
+    }
+
+    void SequentialView::fontsChanged()
+    {
+        mInfo.mFixed = DiffViews::self().fixedFont();
+        mInfo.mVariable = DiffViews::self().variableFont();
+        updateWidth();
     }
 
     MGVDV_IMPLEMENT_DIFFVIEWCREATOR(SequentialView)

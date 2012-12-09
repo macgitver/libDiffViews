@@ -66,6 +66,9 @@ namespace DiffViews
         void resizeEvent( QResizeEvent* );
         void showEvent( QShowEvent* );
 
+    private slots:
+        void fontsChanged();
+
     private:
         QFont               mFixedFont;
         QGraphicsView*      mView;
