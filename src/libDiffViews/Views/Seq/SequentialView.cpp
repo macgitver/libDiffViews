@@ -138,12 +138,16 @@ namespace DiffViews
         QWidget::showEvent( ev );
     }
 
-    void SequentialView::maybeUpdateWidth()
+    qreal SequentialView::realWidth() const
     {
         qreal width = mView->viewport()->width();
         width = qMax( mInfo.minWidth, width );
+        return width;
+    }
 
-        if( mCachedWidth != width )
+    void SequentialView::maybeUpdateWidth()
+    {
+        if( mCachedWidth != realWidth() )
         {
             updateWidth();
         }
@@ -168,16 +172,18 @@ namespace DiffViews
         mInfo.clrDeltaSecond    = QColor( 0xCC, 0xCC, 0xCC );
         mInfo.clrText           = QColor( 0x00, 0x00, 0x00 );
 
-        qreal width = mView->viewport()->width();
+        qreal width = realWidth();
         qreal height = mRoot->setWidth( width );
 
-        width = qMax( mInfo.minWidth, width );
-
         mScene->setSceneRect( 0., 0., width, height );
-
         mRoot->postRendering();
 
         mCachedWidth = width;
+
+        // realWidth() may now soon become smaller. We might have triggered a change in the visibilty
+        // of the vertical scrolling bar. Given our full-width policy, this will also change the
+        // visibility of the horizontal scrolling bar, which is doomed to be ugly.
+        // However, this seems to happen deffered inside Qt - and we cannot catch it here.
     }
 
     void SequentialView::fontsChanged()

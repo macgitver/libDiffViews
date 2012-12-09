@@ -61,6 +61,7 @@ namespace DiffViews
         void generateScene();
         void updateWidth();
         void maybeUpdateWidth();
+        qreal realWidth() const;
 
     protected:
         void resizeEvent( QResizeEvent* );
