@@ -14,6 +14,8 @@
  *
  */
 
+#include <QScrollBar>
+#include <QEvent>
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QVBoxLayout>
@@ -38,6 +40,8 @@ namespace DiffViews
         mView = new QGraphicsView;
         mView->setFrameShape( QFrame::NoFrame );
         mView->setAlignment( Qt::AlignTop | Qt::AlignHCenter );
+
+        mView->verticalScrollBar()->installEventFilter( this );
 
         QVBoxLayout* l = new QVBoxLayout;
         l->setMargin( 0 );
@@ -191,6 +195,19 @@ namespace DiffViews
         mInfo.mFixed = DiffViews::self().fixedFont();
         mInfo.mVariable = DiffViews::self().variableFont();
         updateWidth();
+    }
+
+    bool SequentialView::eventFilter( QObject* object, QEvent* ev )
+    {
+        bool result = QWidget::eventFilter( object, ev );
+
+        if( object == mView->verticalScrollBar() &&
+                ( ev->type() == QEvent::Show || ev->type() == QEvent::Hide ) )
+        {
+            QMetaObject::invokeMethod( this, "maybeUpdateWidth", Qt::QueuedConnection );
+        }
+
+        return result;
     }
 
     MGVDV_IMPLEMENT_DIFFVIEWCREATOR(SequentialView)

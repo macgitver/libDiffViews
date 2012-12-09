@@ -60,10 +60,13 @@ namespace DiffViews
     private:
         void generateScene();
         void updateWidth();
-        void maybeUpdateWidth();
         qreal realWidth() const;
 
+    private slots:
+        void maybeUpdateWidth();
+
     protected:
+        bool eventFilter( QObject*, QEvent* );
         void resizeEvent( QResizeEvent* );
         void showEvent( QShowEvent* );
 
