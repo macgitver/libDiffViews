@@ -27,14 +27,13 @@ namespace DiffViews
     class SeqViewDeltaHeader : public SeqViewItem
     {
     public:
-        SeqViewDeltaHeader( SeqViewInfo* info, FilePatch::Ptr patch, const QFont& font );
+        SeqViewDeltaHeader( SeqViewInfo* info, FilePatch::Ptr patch );
 
     public:
         qreal setWidth( qreal width );
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     private:
-        QFont           mFont;
         QStringList     mTextLines;
     };
 

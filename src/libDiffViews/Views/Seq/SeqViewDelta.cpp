@@ -23,9 +23,8 @@
 namespace DiffViews
 {
 
-    SeqViewDeltaHeader::SeqViewDeltaHeader( SeqViewInfo* info, FilePatch::Ptr patch, const QFont& font )
+    SeqViewDeltaHeader::SeqViewDeltaHeader( SeqViewInfo* info, FilePatch::Ptr patch )
         : SeqViewItem( info )
-        , mFont( font )
     {
         QString strRaw;
         QTextStream rawStream( &strRaw );
@@ -35,7 +34,7 @@ namespace DiffViews
 
     qreal SeqViewDeltaHeader::setWidth( qreal width )
     {
-        QFontMetricsF fm( mFont );
+        QFontMetricsF fm( info()->mFixed );
         qreal height = qRound( fm.lineSpacing() ) * mTextLines.count();
         SeqViewItem::setWidth( width, height );
         return height;
@@ -45,7 +44,7 @@ namespace DiffViews
     {
         SeqViewInfo* i = info();
 
-        QFontMetricsF fm( mFont );
+        QFontMetricsF fm( i->mFixed );
         QLinearGradient grad( 0., 0., 0., height() );
 
         grad.setColorAt( 0., i->clrDeltaFirst );
@@ -55,7 +54,7 @@ namespace DiffViews
         p->drawRect( 10, 0, width() - 20, height() );
 
         p->setPen( i->clrText );
-        p->setFont( mFont );
+        p->setFont( i->mFixed );
         int top = 0;
         foreach( QString line, mTextLines )
         {

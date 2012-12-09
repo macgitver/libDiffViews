@@ -27,7 +27,7 @@ namespace DiffViews
     class SeqViewHunkHeader : public SeqViewItem
     {
     public:
-        SeqViewHunkHeader( SeqViewInfo* info, Hunk::Ptr patch, const QFont& font );
+        SeqViewHunkHeader( SeqViewInfo* info, Hunk::Ptr patch );
 
     public:
         qreal setWidth( qreal width );
@@ -41,14 +41,13 @@ namespace DiffViews
     class SeqViewHunkContent : public SeqViewItem
     {
     public:
-        SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr patch, const QFont& font );
+        SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr patch );
 
     public:
         qreal setWidth( qreal width );
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     private:
-        QFont   mFont;
         int     mSpaceLeft;
         int     mSpaceRight;
 

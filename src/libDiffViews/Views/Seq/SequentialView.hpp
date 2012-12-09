@@ -35,6 +35,9 @@ namespace DiffViews
         qreal           maxDiffStatStatLength;
         int             maxChange;
 
+        QFont           mFixed;
+        QFont           mVariable;
+
         QColor          clrSeparator;
         QColor          clrText;
         QColor          clrAdded;

@@ -24,16 +24,15 @@
 namespace DiffViews
 {
 
-    SeqViewHunkHeader::SeqViewHunkHeader( SeqViewInfo* info, Hunk::Ptr hunk, const QFont& font )
+    SeqViewHunkHeader::SeqViewHunkHeader( SeqViewInfo* info, Hunk::Ptr hunk )
         : SeqViewItem( info )
-        , mFont( font )
         , mText( hunk->completeHeader() )
     {
     }
 
     qreal SeqViewHunkHeader::setWidth( qreal width )
     {
-        QFontMetricsF fm( mFont );
+        QFontMetricsF fm( info()->mFixed );
         qreal height = qRound( fm.lineSpacing() );
 
         SeqViewItem::setWidth( width, height );
@@ -49,14 +48,13 @@ namespace DiffViews
         p->drawRect( 10, 0, width() - 20, height() );
 
         p->setPen( i->clrText );
-        p->setFont( mFont );
+        p->setFont( info()->mFixed );
         p->drawText( QRectF( 12, 1, width() - 24, height() - 2 ),
                      Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere, mText );
     }
 
-    SeqViewHunkContent::SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr hunk, const QFont& font )
+    SeqViewHunkContent::SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr hunk )
         : SeqViewItem( info )
-        , mFont( font )
     {
         #if 0
         QString s; QTextStream ts( &s ); hunk->exportRaw( ts );
@@ -122,7 +120,7 @@ namespace DiffViews
 
     qreal SeqViewHunkContent::setWidth( qreal width )
     {
-        QFontMetricsF fm( mFont );
+        QFontMetricsF fm( info()->mFixed );
         qreal height = qRound( fm.lineSpacing() + 1 ) * mLines.count();
 
         mSpaceLeft = mSpaceRight = 20;
@@ -149,7 +147,7 @@ namespace DiffViews
     {
         SeqViewInfo* ifo = info();
 
-        QFontMetricsF fm( mFont );
+        QFontMetricsF fm( info()->mFixed );
         qreal lh = qRound( fm.lineSpacing() + 1 );
         qreal top;
 
@@ -159,6 +157,9 @@ namespace DiffViews
 
         qreal left = 12 + mSpaceLeft + mSpaceRight + 6;
         qreal wide = width() - 12 - left;
+
+        p->setFont( info()->mFixed );
+
         for( int i = 0; i < mLines.count(); ++i )
         {
             if( !mLines[ i ].rightNr )
@@ -170,7 +171,6 @@ namespace DiffViews
                 p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), ifo->clrAdded );
             }
             p->setPen( ifo->clrText );
-            p->setFont( mFont );
 
             if( mLines[ i ].leftNr )
             {

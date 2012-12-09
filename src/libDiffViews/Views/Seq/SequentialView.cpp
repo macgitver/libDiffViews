@@ -33,7 +33,8 @@ namespace DiffViews
         : DiffView( parent )
     {
         mCachedWidth = -1;
-        mFixedFont = QFont( QLatin1String( "Courier New" ), 12 );
+        mInfo.mFixed = QFont( QLatin1String( "Courier New" ), 12 );
+        mInfo.mVariable = font();
         mScene = NULL;
 
         mView = new QGraphicsView;
@@ -83,7 +84,7 @@ namespace DiffViews
             FilePatch::List paths = mCurrentPatch->allPaths();
             foreach( FilePatch::Ptr filePatch, paths )
             {
-                SeqViewDiffStat* item = new SeqViewDiffStat( &mInfo, font() );
+                SeqViewDiffStat* item = new SeqViewDiffStat( &mInfo );
                 item->setPathName( filePatch->pathNames()[ 0 ] );
                 item->setParentItem( mDiffStats );
 
@@ -91,7 +92,7 @@ namespace DiffViews
                 delta->setVerticalMargins( 3., 3. );
                 delta->setParentItem( mDeltas );
 
-                SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( &mInfo, filePatch, mFixedFont );
+                SeqViewDeltaHeader* deltaHeader = new SeqViewDeltaHeader( &mInfo, filePatch );
                 deltaHeader->setParentItem( delta );
 
                 if( filePatch->type() == FilePatch::BinaryPatch )
@@ -108,10 +109,10 @@ namespace DiffViews
 
                     foreach( Hunk::Ptr hunk, textPatch->allHunks() )
                     {
-                        SeqViewHunkHeader* hunkHead = new SeqViewHunkHeader( &mInfo, hunk, mFixedFont );
+                        SeqViewHunkHeader* hunkHead = new SeqViewHunkHeader( &mInfo, hunk );
                         hunkHead->setParentItem( delta );
 
-                        SeqViewHunkContent* hunkContent = new SeqViewHunkContent( &mInfo, hunk, mFixedFont );
+                        SeqViewHunkContent* hunkContent = new SeqViewHunkContent( &mInfo, hunk );
                         hunkContent->setParentItem( delta );
                     }
                 }

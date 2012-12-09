@@ -25,17 +25,16 @@
 namespace DiffViews
 {
 
-    SeqViewDiffStat::SeqViewDiffStat( SeqViewInfo* info, const QFont& font )
+    SeqViewDiffStat::SeqViewDiffStat( SeqViewInfo* info )
         : SeqViewItem( info )
     {
-        mFont = font;
         mAdded = mRemoved = 0;
         mBinary = false;
     }
 
     qreal SeqViewDiffStat::setWidth( qreal width )
     {
-        QFontMetricsF fm( mFont );
+        QFontMetricsF fm( info()->mVariable );
         qreal height = qRound( fm.lineSpacing() + 3. );
 
         qreal textWidth = fm.width( mPathName );
@@ -71,7 +70,7 @@ namespace DiffViews
     {
         SeqViewInfo* ifo = info();
 
-        p->setFont( mFont );
+        p->setFont( ifo->mVariable );
         p->setPen( ifo->clrText );
         p->drawText( QRectF( 5, 0, mTextWidth, height() ),
                      Qt::AlignVCenter | Qt::AlignLeft, mPathName );
