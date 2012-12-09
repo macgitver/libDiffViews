@@ -80,11 +80,6 @@ namespace DiffViews
                 }
                 break;
 
-            /*
-            Obviously, something is wrong with HunkPart::Insert. It doesn't show up at all.
-            However, everything but Context can be output as "Change", so no reason to be alarmed
-            here, NOW. But we'll have to look for that some day...
-
             case HunkPart::Insert:
                 for( int i = 0; i < part->numLines( 1 ); ++i )
                 {
@@ -104,8 +99,7 @@ namespace DiffViews
                     mLines.append( line );
                 }
                 break;
-            */
-            default:
+
             case HunkPart::Change:
                 for( int i = 0; i < part->numLines( 0 ); ++i )
                 {
