@@ -28,6 +28,13 @@ namespace DiffViews
     public:
         typedef QExplicitlySharedDataPointer< BinaryFilePatch > Ptr;
         typedef QList< Ptr > List;
+
+    public:
+        BinaryFilePatch( const QStringList& pathNames );
+        ~BinaryFilePatch();
+
+    public:
+        virtual Type type() const;
     };
 
 }
