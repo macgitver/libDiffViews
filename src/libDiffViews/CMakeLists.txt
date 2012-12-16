@@ -83,3 +83,6 @@ ADD_QT_LIBRARY(
     ${MOC_FILES}
     ${HIC_FILES}
 )
+
+INSTALL_FRAMEWORK( DiffViews Runtime )
+
