@@ -149,7 +149,7 @@ namespace DiffViews
 
         QFontMetricsF fm( info()->mFixed );
         qreal lh = qRound( fm.lineSpacing() + 1 );
-        qreal top;
+        qreal top = 0.0;
 
         p->setPen( ifo->clrSeparator );
         p->setBrush( ifo->clrDeltaFirst );
