@@ -81,8 +81,9 @@ ADD_QT_LIBRARY(
     ${SRC_FILES}
     ${HDR_FILES}
     ${MOC_FILES}
-    ${HIC_FILES}
+    ${HIC_FILES} ${HID_FILES}
 )
 
 INSTALL_FRAMEWORK( DiffViews Runtime )
 
+MSVC_SPLIT_SOURCES( DiffViews )
