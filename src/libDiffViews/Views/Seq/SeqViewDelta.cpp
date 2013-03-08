@@ -35,7 +35,8 @@ namespace DiffViews
     qreal SeqViewDeltaHeader::setWidth( qreal width )
     {
         QFontMetricsF fm( info()->mFixed );
-        qreal height = qRound( fm.lineSpacing() ) * mTextLines.count();
+        qreal height = qRound( fm.lineSpacing() ) * mTextLines.count() + 1;
+
         SeqViewItem::setWidth( width, height );
         return height;
     }
@@ -55,11 +56,12 @@ namespace DiffViews
 
         p->setPen( i->clrText );
         p->setFont( i->mFixed );
-        int top = 0;
+        qreal top = - fm.leading() / 2.;
+
         foreach( QString line, mTextLines )
         {
             p->drawText( QRectF( 12, top, width() - 24, fm.lineSpacing() ),
-                         Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                         Qt::AlignLeft | Qt::AlignTop | Qt::TextWrapAnywhere,
                          line );
             top += qRound( fm.lineSpacing() );
         }

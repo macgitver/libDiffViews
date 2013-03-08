@@ -48,8 +48,8 @@ namespace DiffViews
         void paint( QPainter*, const QStyleOptionGraphicsItem*, QWidget* );
 
     private:
-        int     mSpaceLeft;
-        int     mSpaceRight;
+        qreal   mSpaceLeft;
+        qreal   mSpaceRight;
 
         struct Line
         {

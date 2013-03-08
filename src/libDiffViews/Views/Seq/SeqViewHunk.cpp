@@ -33,7 +33,7 @@ namespace DiffViews
     qreal SeqViewHunkHeader::setWidth( qreal width )
     {
         QFontMetricsF fm( info()->mFixed );
-        qreal height = qRound( fm.lineSpacing() );
+        qreal height = 2 + fm.lineSpacing();
 
         SeqViewItem::setWidth( width, height );
         return height;
@@ -42,15 +42,16 @@ namespace DiffViews
     void SeqViewHunkHeader::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
         SeqViewInfo* i = info();
+        QFontMetricsF fm( i->mFixed );
 
         p->setPen( i->clrSeparator );
         p->setBrush( i->clrDeltaFirst );
-        p->drawRect( 10, 0, width() - 20, height() );
+        p->drawRect( 10., 0., width() - 20., height() );
 
         p->setPen( i->clrText );
-        p->setFont( info()->mFixed );
-        p->drawText( QRectF( 12, 1, width() - 24, height() - 2 ),
-                     Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere, mText );
+        p->setFont( i->mFixed );
+        p->drawText( QRectF( 12, 1 - fm.leading() / 2., width() - 24, height() - 2 ),
+                     Qt::AlignLeft | Qt::AlignTop | Qt::TextWrapAnywhere, mText );
     }
 
     SeqViewHunkContent::SeqViewHunkContent( SeqViewInfo* info, Hunk::Ptr hunk )
@@ -121,20 +122,21 @@ namespace DiffViews
     qreal SeqViewHunkContent::setWidth( qreal width )
     {
         QFontMetricsF fm( info()->mFixed );
-        qreal height = qRound( fm.lineSpacing() + 1 ) * mLines.count();
+        QRectF r = fm.boundingRect( QLatin1String( "X" ) );
+        qreal height = 1 + ( r.height() + 1 ) * mLines.count();
 
         mSpaceLeft = mSpaceRight = 20;
         for( int i = 0; i < mLines.count(); ++i )
         {
             if( mLines[ i ].leftNr )
             {
-                int space = qRound( fm.width( QString::number( mLines[ i ].leftNr ) ) );
+                qreal space = fm.width( QString::number( mLines[ i ].leftNr ) );
                 mSpaceLeft = qMax( mSpaceLeft, space );
             }
 
             if( mLines[ i ].rightNr )
             {
-                int space = qRound( fm.width( QString::number( mLines[ i ].rightNr ) ) );
+                qreal space = fm.width( QString::number( mLines[ i ].rightNr ) );
                 mSpaceRight = qMax( mSpaceRight, space );
             }
         }
@@ -147,47 +149,49 @@ namespace DiffViews
     {
         SeqViewInfo* ifo = info();
 
-        QFontMetricsF fm( info()->mFixed );
-        qreal lh = qRound( fm.lineSpacing() + 1 );
-        qreal top = 0.0;
+        QFontMetricsF fm( ifo->mFixed );
+        QRectF r = fm.boundingRect( QLatin1String( "X" ) );
+        qreal lh = r.height() + 1;
+        qreal top = 1.;
 
         p->setPen( ifo->clrSeparator );
         p->setBrush( ifo->clrDeltaFirst );
-        p->drawRect( 10, 0, width() - 20, height() );
+        p->drawRect( 10, 0, width() - 20, height() - 1 );
 
         qreal left = 12 + mSpaceLeft + mSpaceRight + 6;
         qreal wide = width() - 12 - left;
 
-        p->setFont( info()->mFixed );
+        p->setFont( ifo->mFixed );
 
         for( int i = 0; i < mLines.count(); ++i )
         {
             if( !mLines[ i ].rightNr )
             {
-                p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), ifo->clrRemoved );
+                p->fillRect( QRectF( 11, top, width() - 21, lh ), ifo->clrRemoved );
             }
             else if( !mLines[ i ].leftNr )
             {
-                p->fillRect( QRectF( 11, 1 + top, width() - 21, lh ), ifo->clrAdded );
+                p->fillRect( QRectF( 11, top, width() - 21, lh ), ifo->clrAdded );
             }
             p->setPen( ifo->clrText );
 
+            qreal top2 = top - fm.leading() / 2.;
             if( mLines[ i ].leftNr )
             {
-                p->drawText( QRectF( 12, 1 + top, mSpaceLeft, lh - 1 ),
-                             Qt::AlignRight | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                p->drawText( QRectF( 12, top2, mSpaceLeft, lh ),
+                             Qt::AlignRight | Qt::AlignTop | Qt::TextWrapAnywhere,
                              QString::number( mLines[ i ].leftNr ) );
             }
 
             if( mLines[ i ].rightNr )
             {
-                p->drawText( QRectF( 12 + mSpaceLeft + 2, 1 + top, mSpaceRight, lh - 1 ),
-                             Qt::AlignRight | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+                p->drawText( QRectF( 12 + mSpaceLeft + 2, top2, mSpaceRight, lh ),
+                             Qt::AlignRight | Qt::AlignTop | Qt::TextWrapAnywhere,
                              QString::number( mLines[ i ].rightNr ) );
             }
 
-            p->drawText( QRectF( left, 1 + top, wide, lh - 1 ),
-                         Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWrapAnywhere,
+            p->drawText( QRectF( left, top2, wide, lh ),
+                         Qt::AlignLeft | Qt::AlignTop | Qt::TextWrapAnywhere,
                          mLines[ i ].text );
 
             top += lh;
@@ -195,10 +199,10 @@ namespace DiffViews
 
         p->setPen( ifo->clrSeparator );
         p->drawLine( 12 + mSpaceLeft + 1, 0,
-                     12 + mSpaceLeft + 1, height() );
+                     12 + mSpaceLeft + 1, height() - 1 );
 
         p->drawLine( 12 + mSpaceLeft + mSpaceRight + 2, 0,
-                     12 + mSpaceLeft + mSpaceRight + 2, height() );
+                     12 + mSpaceLeft + mSpaceRight + 2, height() - 1 );
     }
 
 }
