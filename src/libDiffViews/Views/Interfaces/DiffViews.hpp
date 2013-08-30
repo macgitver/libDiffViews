@@ -18,6 +18,7 @@
 #define MGV_DIFF_VIEWS_HPP
 
 #include <QObject>
+#include <QSet>
 #include <QFont>
 
 #include "libDiffViews/DiffViewsApi.hpp"
@@ -35,7 +36,7 @@ namespace DiffViews
         static DiffViews& self();
 
     public:
-        QList< DiffViewCreator* > creators() const;
+        QSet< DiffViewCreator* > creators() const;
         void registerCreator( DiffViewCreator* creator );
         void unregisterCreator( DiffViewCreator* creator );
 
@@ -62,7 +63,7 @@ namespace DiffViews
         QString                     mDefaultCreatorName;
         QFont                       mFixedFont;
         QFont                       mVariableFont;
-        QList< DiffViewCreator* >   mCreators;
+        QSet< DiffViewCreator* >    mCreators;
     };
 
 }

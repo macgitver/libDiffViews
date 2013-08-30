@@ -17,7 +17,7 @@
 #ifndef DIFFVIEWS_MODEL_FILE_PATCH_HPP
 #define DIFFVIEWS_MODEL_FILE_PATCH_HPP
 
-#include <QList>
+#include <QVector>
 #include <QStringList>
 #include <QSharedData>
 
@@ -35,7 +35,7 @@ namespace DiffViews
     {
     public:
         typedef QExplicitlySharedDataPointer< FilePatch > Ptr;
-        typedef QList< Ptr > List;
+        typedef QVector< Ptr > List;
 
         enum Type
         {

@@ -18,6 +18,7 @@
 #define DIFFVIEWS_MODEL_DIFF_LINES_HPP
 
 #include <QStringList>
+#include <QVector>
 
 #include "libDiffViews/DiffViewsApi.hpp"
 
@@ -29,7 +30,7 @@ namespace DiffViews
     class DIFF_VIEWS_API DiffLines
     {
     public:
-        typedef QList< DiffLines* > List;
+        typedef QVector< DiffLines* > List;
 
     public:
         DiffLines();

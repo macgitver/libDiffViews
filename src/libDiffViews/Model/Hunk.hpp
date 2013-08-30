@@ -26,7 +26,7 @@ namespace DiffViews
     {
     public:
         typedef QExplicitlySharedDataPointer< Hunk > Ptr;
-        typedef QList< Ptr > List;
+        typedef QVector< Ptr > List;
 
     public:
         Hunk();

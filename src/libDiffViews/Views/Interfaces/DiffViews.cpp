@@ -57,19 +57,19 @@ namespace DiffViews
         return *sSelf;
     }
 
-    QList< DiffViewCreator* > DiffViews::creators() const
+    QSet< DiffViewCreator* > DiffViews::creators() const
     {
         return mCreators;
     }
 
     void DiffViews::registerCreator( DiffViewCreator* creator )
     {
-        mCreators.append( creator );
+        mCreators.insert( creator );
     }
 
     void DiffViews::unregisterCreator( DiffViewCreator* creator )
     {
-        mCreators.removeAll( creator );
+        mCreators.remove( creator );
     }
 
     DiffViewCreator* DiffViews::defaultCreator()

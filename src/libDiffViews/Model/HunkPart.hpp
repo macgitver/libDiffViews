@@ -32,7 +32,7 @@ namespace DiffViews
     {
     public:
         typedef QExplicitlySharedDataPointer< HunkPart > Ptr;
-        typedef QList< Ptr > List;
+        typedef QVector< Ptr > List;
 
     public:
         enum Type
