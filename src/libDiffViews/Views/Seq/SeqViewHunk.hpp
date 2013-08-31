@@ -57,7 +57,9 @@ namespace DiffViews
             int         leftNr;
             int         rightNr;
         };
-        QList< Line > mLines;
+
+        typedef QVector< Line > Lines;
+        Lines mLines;
     };
 
 }
