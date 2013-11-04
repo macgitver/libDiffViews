@@ -52,6 +52,15 @@ namespace DiffViews
         mInfo.mFixed = DiffViews::self().fixedFont();
         mInfo.mVariable = DiffViews::self().variableFont();
 
+        // setup colors
+        mInfo.clrAdded          = QColor( 0xDD, 0xFF, 0xDD );
+        mInfo.clrRemoved        = QColor( 0xFF, 0xDD, 0xDD );
+        mInfo.clrContext        = QColor( 0x00, 0x00, 0x00 );
+        mInfo.clrSeparator      = QColor( 0xCC, 0xCC, 0xCC );
+        mInfo.clrDeltaFirst     = QColor( 0xF8, 0xF8, 0xFF );
+        mInfo.clrDeltaSecond    = QColor( 0xCC, 0xCC, 0xCC );
+        mInfo.clrText           = QColor( 0x00, 0x00, 0x00 );
+
         connect( &DiffViews::self(), SIGNAL(fontsChanged()),
                  this, SLOT(fontsChanged()) );
     }
@@ -168,13 +177,6 @@ namespace DiffViews
         mInfo.maxDiffStatTextLength = 0;
         mInfo.maxDiffStatStatLength = 0;
         mInfo.maxChange = 0;
-        mInfo.clrAdded          = QColor( 0x99, 0xCC, 0x99 );
-        mInfo.clrRemoved        = QColor( 0xCC, 0x99, 0x99 );
-        mInfo.clrContext        = QColor( 0x00, 0x00, 0x00 );
-        mInfo.clrSeparator      = QColor( 0xCC, 0xCC, 0xCC );
-        mInfo.clrDeltaFirst     = QColor( 0xEE, 0xEE, 0xEE );
-        mInfo.clrDeltaSecond    = QColor( 0xCC, 0xCC, 0xCC );
-        mInfo.clrText           = QColor( 0x00, 0x00, 0x00 );
 
         qreal width = realWidth();
         qreal height = mRoot->setWidth( width );
