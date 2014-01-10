@@ -70,8 +70,11 @@ namespace DiffViews
     {
         SeqViewInfo* ifo = info();
 
+        QPen pen(ifo->clrText);
+        pen.setWidth(0);
+
         p->setFont( ifo->mVariable );
-        p->setPen( ifo->clrText );
+        p->setPen(pen);
         p->drawText( QRectF( 5, 0, mTextWidth, height() ),
                      Qt::AlignVCenter | Qt::AlignLeft, mPathName );
 
@@ -93,7 +96,8 @@ namespace DiffViews
             p->fillRect( r, ifo->clrRemoved );
         }
 
-        p->setPen( ifo->clrSeparator );
+        pen.setColor(ifo->clrSeparator);
+        p->setPen(pen);
         p->drawLine( QPointF( 0, height() ), QPointF( width(), height() ) );
     }
 

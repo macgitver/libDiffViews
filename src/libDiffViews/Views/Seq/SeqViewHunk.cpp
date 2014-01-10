@@ -42,13 +42,17 @@ namespace DiffViews
     void SeqViewHunkHeader::paint( QPainter* p, const QStyleOptionGraphicsItem*, QWidget* )
     {
         SeqViewInfo* i = info();
+        QPen pen(i->clrSeparator);
+        pen.setWidth(0);
+
         QFontMetricsF fm( i->mFixed );
 
-        p->setPen( i->clrSeparator );
+        p->setPen(pen);
         p->setBrush( i->clrDeltaFirst );
         p->drawRect( 10., 0., width() - 20., height() );
 
-        p->setPen( i->clrText );
+        pen.setColor(i->clrText);
+        p->setPen(pen);
         p->setFont( i->mFixed );
         p->drawText( QRectF( 12, 1 - fm.leading() / 2., width() - 24, height() - 2 ),
                      Qt::AlignLeft | Qt::AlignTop | Qt::TextWrapAnywhere, mText );
@@ -150,30 +154,31 @@ namespace DiffViews
         SeqViewInfo* ifo = info();
 
         QFontMetricsF fm( ifo->mFixed );
+        QRectF outline(10, 0, width() - 20, height());
         QRectF r = fm.boundingRect( QLatin1String( "X" ) );
         qreal lh = r.height() + 1;
-        qreal top = 1.;
-
-        p->setPen( ifo->clrSeparator );
-        p->setBrush( ifo->clrDeltaFirst );
-        p->drawRect( 10, 0, width() - 20, height() - 1 );
+        qreal top = 0;
 
         qreal left = 12 + mSpaceLeft + mSpaceRight + 6;
         qreal wide = width() - 12 - left;
 
+        p->fillRect(outline, ifo->clrDeltaFirst);
         p->setFont( ifo->mFixed );
+
+        QPen pen(ifo->clrText);
+        pen.setWidth(0);
+        p->setPen(pen);
 
         for( int i = 0; i < mLines.count(); ++i )
         {
             if( !mLines[ i ].rightNr )
             {
-                p->fillRect( QRectF( 11, top, width() - 21, lh ), ifo->clrRemoved );
+                p->fillRect( QRectF( 10, top, width() - 20, lh ), ifo->clrRemoved );
             }
             else if( !mLines[ i ].leftNr )
             {
-                p->fillRect( QRectF( 11, top, width() - 21, lh ), ifo->clrAdded );
+                p->fillRect( QRectF( 10, top, width() - 20, lh ), ifo->clrAdded );
             }
-            p->setPen( ifo->clrText );
 
             qreal top2 = top - fm.leading() / 2.;
             if( mLines[ i ].leftNr )
@@ -197,12 +202,14 @@ namespace DiffViews
             top += lh;
         }
 
-        p->setPen( ifo->clrSeparator );
+        pen.setColor(ifo->clrSeparator);
+        p->setPen(pen);
+        p->drawRect(outline);
         p->drawLine( 12 + mSpaceLeft + 1, 0,
-                     12 + mSpaceLeft + 1, height() - 1 );
+                     12 + mSpaceLeft + 1, height() );
 
         p->drawLine( 12 + mSpaceLeft + mSpaceRight + 2, 0,
-                     12 + mSpaceLeft + mSpaceRight + 2, height() - 1 );
+                     12 + mSpaceLeft + mSpaceRight + 2, height() );
     }
 
 }

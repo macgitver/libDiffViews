@@ -45,16 +45,20 @@ namespace DiffViews
     {
         SeqViewInfo* i = info();
 
+        QPen pen(i->clrSeparator);
+        pen.setWidth(0);
+
         QFontMetricsF fm( i->mFixed );
         QLinearGradient grad( 0., 0., 0., height() );
 
         grad.setColorAt( 0., i->clrDeltaFirst );
         grad.setColorAt( 1., i->clrDeltaSecond );
         p->setBrush( grad );
-        p->setPen( i->clrSeparator );
+        p->setPen(pen);
         p->drawRect( 10, 0, width() - 20, height() );
 
-        p->setPen( i->clrText );
+        pen.setColor(i->clrText);
+        p->setPen(pen);
         p->setFont( i->mFixed );
         qreal top = - fm.leading() / 2.;
 
